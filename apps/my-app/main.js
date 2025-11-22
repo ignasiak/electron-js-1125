@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain, Menu, Tray, globalShortcut } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, Tray, globalShortcut, nativeImage } = require('electron')
 const path = require('node:path')
 
 let mainWindow = null;
@@ -27,7 +27,8 @@ const isMac = process.platform === 'darwin';
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
-  globalShortcut.register('CommandOrControl+Option+I', () => {
+  const isMac = process.platform === 'darwin';
+  globalShortcut.register(isMac ? 'CommandOrControl+Option+I' : 'CommandOrControl+Shift+I', () => {
     mainWindow.webContents.toggleDevTools();
   });
   const menu = Menu.buildFromTemplate([

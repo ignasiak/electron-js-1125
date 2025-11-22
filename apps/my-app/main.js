@@ -3,6 +3,8 @@ const { app, BrowserWindow, ipcMain, Menu, Tray, globalShortcut, nativeImage, di
 const path = require('node:path')
 const fs = require('node:fs');
 
+const startTime = Date.now()
+
 let mainWindow = null;
 
 function createWindow () {
@@ -51,6 +53,9 @@ app.whenReady().then(() => {
   ]));
 
   createWindow()
+
+  const endTime = Date.now()
+  console.log(`App ready in ${endTime - startTime} ms`);
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -119,3 +124,6 @@ ipcMain.handle('save-file', async (event, content) => {
 
   return false;
 });
+
+const appMetrics = app.getAppMetrics();
+console.log('App Metrics:', appMetrics);
